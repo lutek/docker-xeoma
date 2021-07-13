@@ -1,0 +1,15 @@
+version: '3'
+services:
+  
+  xeoma:
+    image: lutek/xeoma
+    container_name: xeoma
+    ports:
+      - "8090:8090"
+      - "10090:10090"
+    environment:
+      VERSION: latest
+      TZ: Europe/Warsaw
+    volumes:
+      - ./config:/config
+      - /nas/backup/archive/Xeoma/XeomaArchive:/archive
