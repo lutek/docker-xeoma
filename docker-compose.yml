@@ -1,15 +1,31 @@
 version: '3'
 services:
-  
+
   xeoma:
     image: lutek/xeoma
-    container_name: xeoma
+    container_name: xeoma_server
     ports:
-      - "8090:8090"
-      - "10090:10090"
+      - 8090:8090
+      - 10090:10090
     environment:
       VERSION: latest
       TZ: Europe/Warsaw
     volumes:
       - ./config:/config
       - /nas/backup/archive/Xeoma/XeomaArchive:/archive
+    mac_address: 02:42:c0:a8:84:22
+    networks: 
+      xeoma_vlan:
+        ipv4_address: 10.0.0.12
+
+networks:
+  xeoma_vlan:
+    driver: macvlan
+    driver_opts:
+      parent: enp6s0
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24
+          ip_range: 10.0.0.12/32
+          gateway: 10.0.0.1
